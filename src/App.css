@@ -1,3 +1,15 @@
 .App {
   text-align: center;
+  width: 30rem;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: rgb(209, 208, 208);
+  border-radius: 20px;
+}
+.todolist {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 200px 0px;
 }
