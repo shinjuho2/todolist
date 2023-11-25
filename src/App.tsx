@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
+import uuid from 'react-uuid'
 
 interface List {
-  id: number;
+  id: string;
   text: string;
   complete: boolean;
 }
@@ -11,17 +12,26 @@ function App() {
 
   const [todolist, setTodolist] = useState<List[]>([
     {
-      id: 1,
+      id: uuid(),
       text: "예시 1",
       complete: false,
     },
   ]);
 
+  const [newList, setNewList] = useState("");
+
   const [input, setinput] = useState("");
 
-  const createlist = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setinput(e.target.value)
+  const createList = () => {
+    if(newList !== '') {
+      setTodolist([...todolist, { id: uuid(), text: newList, complete: false }]);
+      setNewList('');
+    }
   }
+
+  // const createlist = (e:React.ChangeEvent<HTMLInputElement>) => {
+  //   setinput(e.target.value)
+  // }
 
   return (
     <div className="App">
@@ -31,25 +41,21 @@ function App() {
           todolist.map(function (a, i) {
             return (
               <div key={i}>
-                <ul className='todolist'>
+                <li className='todolist'>
                   <button>완료</button>
                   <p>{a.text}</p>
                   <div className='listBtn'>
                     <button>수정</button>
                     <button>삭제</button>
                   </div>
-                </ul>
+                </li>
               </div>
             )
           })
         }
         <div className='createList'>
-          <input type="text" placeholder='입력해주세요' onChange={(e) => {setinput(e.target.value)}}/>
-          <button onClick={() => {
-            const copy = [...todolist]
-            copy.unshift()
-            setTodolist(copy)
-          }}>등록</button>
+          <input type="text" placeholder='입력해주세요' />
+          <button onClick={createList}>등록</button>
         </div>
       </div>
     </div>
