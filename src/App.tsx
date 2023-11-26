@@ -20,7 +20,9 @@ function App() {
 
   const [newList, setNewList] = useState("");
 
-  const [input, setinput] = useState("");
+  const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewList(e.target.value);
+  }
 
   const createList = () => {
     if(newList !== '') {
@@ -29,9 +31,11 @@ function App() {
     }
   }
 
-  // const createlist = (e:React.ChangeEvent<HTMLInputElement>) => {
-  //   setinput(e.target.value)
-  // }
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      createList();
+    }
+  };
 
   return (
     <div className="App">
@@ -54,7 +58,13 @@ function App() {
           })
         }
         <div className='createList'>
-          <input type="text" placeholder='입력해주세요' />
+          <input 
+          type="text" 
+          placeholder='입력해주세요' 
+          value={newList} 
+          onChange={inputChange}
+          onKeyDown={handleKeyPress}
+          />
           <button onClick={createList}>등록</button>
         </div>
       </div>
