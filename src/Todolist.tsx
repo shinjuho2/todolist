@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import uuid from 'react-uuid'
 
@@ -10,8 +10,6 @@ interface List {
 
 function Todolist() {
 
-  const data = localStorage.getItem
-
   const [todolist, setTodolist] = useState<List[]>([
     {
       id: uuid(),
@@ -22,6 +20,17 @@ function Todolist() {
 
   const [newList, setNewList] = useState("");
 
+  useEffect(() => {
+    const data = localStorage.getItem('todolist');
+    if(data) {
+      setTodolist(JSON.parse(data));
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('todolist', JSON.stringify(todolist));
+  }, [todolist])
+
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewList(e.target.value);
   }
@@ -29,7 +38,7 @@ function Todolist() {
   const createList = () => {
     if(newList !== '') {
       setTodolist([...todolist, { id: uuid(), text: newList, complete: false }]);
-      setNewList('');
+      setNewList("");
     }
   }
 
@@ -61,8 +70,8 @@ function Todolist() {
         }
         <div className='createList'>
           <input 
-          type="text" 
-          placeholder='입력해주세요' 
+          placeholder='입력해주세요'
+          value={newList}
           onChange={inputChange}
           onKeyDown={handleKeyPress}
           />
