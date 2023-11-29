@@ -48,20 +48,24 @@ function Todolist() {
     }
   };
 
+  const deleteList = () => {
+    setTodolist((todolist) => todolist.filter((todo) => todo.id !== todo.id));
+  }
+
   return (
     <div className="App">
       <div className='Container'>
         <h1>my todolist!</h1>
         {
-          todolist.map(function (a, i) {
+          todolist.map((todo) => {
             return (
-              <div key={i}>
+              <div key={todo}>
                 <li className='todolist'>
                   <button>완료</button>
-                  <p>{a.text}</p>
+                  <p>{todo.text}</p>
                   <div className='listBtn'>
                     <button>수정</button>
-                    <button>삭제</button>
+                    <button onClick={() => deleteList(...)}>삭제</button>
                   </div>
                 </li>
               </div>
