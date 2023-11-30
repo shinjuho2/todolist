@@ -59,13 +59,13 @@ function Todolist() {
         {
           todolist.map((todo) => {
             return (
-              <div key={todo}>
+              <div>
                 <li className='todolist'>
                   <button>완료</button>
                   <p>{todo.text}</p>
                   <div className='listBtn'>
                     <button>수정</button>
-                    <button onClick={() => deleteList(...)}>삭제</button>
+                    <button onClick={() => deleteList()}>삭제</button>
                   </div>
                 </li>
               </div>
