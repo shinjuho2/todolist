@@ -19,6 +19,7 @@ function Todolist() {
   ]);
 
   const [newList, setNewList] = useState("");
+  const [editList, setEditList] = useState('');
 
   useEffect(() => {
     const data = localStorage.getItem('todolist');
