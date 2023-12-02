@@ -53,6 +53,10 @@ function Todolist() {
     setTodolist((todolist) => todolist.filter((todo) => todo.id !== todo.id));
   }
 
+  const edit = (e: React.ChangeEvent) => {
+
+  } 
+
   return (
     <div className="App">
       <div className='Container'>
