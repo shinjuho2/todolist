@@ -50,8 +50,6 @@ function Todolist() {
   };
 
   const deleteList = () => {
-    // const removeList = todolist.filter((todo) => {todo.id !== todo.id});
-    // setTodolist(removeList)
     setTodolist((todolist) => todolist.filter((todo) => todo.id !== todo.id));
   }
 
