@@ -19,7 +19,7 @@ function Todolist() {
   ]);
 
   const [newList, setNewList] = useState("");
-  const [editList, setEditList] = useState('');
+  const [editList, setEditList] = useState<{ id: string; text: string } | null>(null);
 
   useEffect(() => {
     const data = localStorage.getItem('todolist');
@@ -50,12 +50,28 @@ function Todolist() {
   };
 
   const deleteList = () => {
+    // const removeList = todolist.filter((todo) => {todo.id !== todo.id});
+    // setTodolist(removeList)
     setTodolist((todolist) => todolist.filter((todo) => todo.id !== todo.id));
   }
 
-  const edit = (e: React.ChangeEvent) => {
-
+  const edit = (id: string, text: string) => {
+    setEditList({id, text});
   } 
+
+  const editCancel = () => {
+    setEditList(null);
+  }
+
+  const editSave = () => {
+    if (editList) {
+      const updateList = todolist.map((todo) => 
+        todo.id === editList.id ? {...todo, text: editList.text} : todo
+      );
+      setTodolist(updateList);
+      setEditList(null);
+    }
+  }
 
   return (
     <div className="App">
@@ -66,12 +82,28 @@ function Todolist() {
             return (
               <div>
                 <li className='todolist'>
-                  <button>완료</button>
-                  <p>{todo.text}</p>
-                  <div className='listBtn'>
-                    <button>수정</button>
-                    <button onClick={() => deleteList()}>삭제</button>
-                  </div>
+                  {
+                    editList?.id === todo.id ? (
+                      <>
+                        <input 
+                        type="text"
+                        value={editList.text}
+                        onChange={(e) => setEditList({...editList, text: e.target.value})}
+                        />
+                        <button onClick={editSave}>저장</button>
+                        <button onClick={editCancel}>취소</button>
+                      </>
+                    )
+                    :
+                    (
+                      <>
+                        <button>완료</button>
+                        {todo.text}
+                        <button onClick={() => edit(todo.id, todo.text)}>수정</button>
+                        <button onClick={() => deleteList()}>삭제</button>
+                      </>
+                    )
+                  }
                 </li>
               </div>
             )
